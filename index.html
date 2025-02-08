@@ -5,109 +5,166 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Selling Dreams</title>
     <style>
-        /* Ensure the body and content are responsive */
-body {
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    min-height: 100vh;
-    margin: 0;
-    display: flex;
-    flex-direction: column; /* Stack elements vertically on small screens */
-    justify-content: flex-start;
-    align-items: center;
-}
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column; /* Default to vertical layout */
+            justify-content: flex-start;
+            align-items: center;
+        }
 
-body.login-page {
-    background: linear-gradient(to right, #1E3A8A, #0F172A);
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    text-align: center;
-}
+        body.login-page {
+            background: linear-gradient(to right, #1E3A8A, #0F172A);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            text-align: center;
+        }
 
-/* Sidebar styling */
-.sidebar {
-    height: 100%;
-    width: 250px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background: linear-gradient(to right, #1E3A8A, #0F172A);
-    padding-top: 20px;
-    color: white;
-    font-size: 18px;
-    padding-right: 20px;
-    display: none; /* Hide sidebar initially */
-    z-index: 50;
-}
+        .container {
+            max-width: 600px;
+            background: white;
+            padding: 20px;
+            margin: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-/* Responsive Design for mobile screens */
-@media (max-width: 768px) {
-    /* Mobile view: stack header and login container vertically */
-    header {
-        padding: 10px;
-        justify-content: flex-start; /* Align to left in mobile view */
-        position: static; /* Remove fixed positioning on mobile */
-    }
+        h2 {
+            color: hsl(0, 100%, 2%);
+        }
 
-    header .logout-button {
-        margin-right: 10px; /* Adjust margin for mobile */
-    }
+        .input-field {
+            width: 95%;
+            padding: 10px;
+            margin: 10px auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: block;
+        }
 
-    .sidebar {
-        width: 200px; /* Slightly narrower sidebar on mobile */
-    }
+        .login-button {
+            background-color: #1d4ed8;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
 
-    .container, .login-container {
-        width: 100%;
-        padding: 15px;
-        box-sizing: border-box;
-    }
+        .login-button:hover {
+            background-color: #153c8a;
+        }
 
-    .content {
-        margin-left: 0; /* Adjust for full-width on mobile */
-        padding: 15px;
-        width: 100%;
-    }
+        /* Sidebar Styling */
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: linear-gradient(to right, #1E3A8A, #0F172A);
+            padding-top: 20px;
+            color: white;
+            font-size: 18px;
+            display: none; /* Initially hidden */
+        }
 
-    /* Adjust the dropdown for mobile */
-    .dropdown-content {
-        position: static;
-        margin-top: 10px;
-        background-color: #0F172A;
-        width: 100%;
-    }
+        .sidebar a {
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            display: block;
+        }
 
-    .dropdown-content a {
-        padding: 10px;
-        font-size: 16px;
-    }
-}
+        .sidebar a:hover {
+            background-color: #1d4ed8;
+        }
 
-/* Styling for wider screens (default styling) */
-@media (min-width: 769px) {
-    body {
-        flex-direction: row; /* Stack items horizontally for wider screens */
-        justify-content: flex-start;
-    }
+        /* Header Styling */
+        header {
+            width: 100%;
+            background-color: #0F172A;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+        }
 
-    .container, .login-container {
-        width: 600px;
-    }
+        header .logout-button {
+            color: white;
+            background-color: #1d4ed8;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-right: 50px;
+        }
 
-    .content {
-        margin-left: 260px; /* Sidebar space */
-        padding: 20px;
-    }
+        header .logout-button:hover {
+            background-color: #153c8a;
+        }
 
-    header {
-        position: fixed;
-        top: 0;
-        right: 0;
-        z-index: 100;
-    }
-}
+        /* Media Queries for Mobile View */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px; /* Reduced padding for mobile */
+                flex-direction: column;
+            }
 
+            .sidebar {
+                width: 200px; /* Narrow sidebar */
+                position: static; /* Sidebar becomes part of flow */
+                display: block;
+                margin-top: 20px;
+            }
+
+            header {
+                position: static; /* Static header for mobile */
+                padding: 10px;
+                justify-content: flex-start; /* Align button to left */
+            }
+
+            header .logout-button {
+                margin-right: 10px; /* Adjust margin on mobile */
+            }
+
+            .container, .login-container {
+                width: 100%;
+                padding: 15px;
+                box-sizing: border-box;
+            }
+
+            .content {
+                width: 100%;
+                padding: 10px;
+            }
+        }
+
+        /* Media Queries for Desktop View */
+        @media (min-width: 769px) {
+            body {
+                flex-direction: row; /* Horizontal layout for large screens */
+                justify-content: flex-start;
+            }
+
+            .container {
+                width: 600px;
+            }
+
+            .content {
+                margin-left: 260px;
+                padding: 20px;
+            }
+        }
     </style>
     <script>
         // Check if the user is already logged in when the page loads
@@ -117,7 +174,7 @@ body.login-page {
                 document.getElementById('knowledge-base').style.display = 'block';
                 document.body.classList.remove('login-page');
                 document.querySelector('.sidebar').style.display = 'block'; // Show sidebar after login
-                document.querySelector('header').style.display = 'flex'; // Show the header with logout button
+                document.querySelector('header').style.display = 'flex'; // Show header with logout button
             }
         };
 
@@ -147,60 +204,6 @@ body.login-page {
             }
         }
 
-        function showContactDetails(city) {
-            const contactDetailsContainer = document.getElementById('sidebar-contact-details');
-            let contactDetails = '';
-
-            switch(city) {
-                case 'Warsaw':
-                    contactDetails = `
-                        <h4>Office for Foreigners - Warsaw</h4>
-                        <p>Address: ul. Targowa 74, 03-734 Warszawa</p>
-                        <p>Phone: +48 22 600 07 72</p>
-                        <p>Email: warsaw@office.gov.pl</p>
-                    `;
-                    break;
-                case 'Kraków':
-                    contactDetails = `
-                        <h4>Office for Foreigners - Kraków</h4>
-                        <p>Address: ul. Basztowa 22, 31-156 Kraków</p>
-                        <p>Phone: +48 12 616 45 45</p>
-                        <p>Email: krakow@office.gov.pl</p>
-                    `;
-                    break;
-                case 'Gdańsk':
-                    contactDetails = `
-                        <h4>Office for Foreigners - Gdańsk</h4>
-                        <p>Address: ul. Wały Jagiellońskie 1, 80-853 Gdańsk</p>
-                        <p>Phone: +48 58 302 79 65</p>
-                        <p>Email: gdansk@office.gov.pl</p>
-                    `;
-                    break;
-                case 'Wrocław':
-                    contactDetails = `
-                        <h4>Office for Foreigners - Wrocław</h4>
-                        <p>Address: ul. Świdnicka 26, 50-066 Wrocław</p>
-                        <p>Phone: +48 71 343 61 77</p>
-                        <p>Email: wroclaw@office.gov.pl</p>
-                    `;
-                    break;
-                case 'Poznań':
-                    contactDetails = `
-                        <h4>Office for Foreigners - Poznań</h4>
-                        <p>Address: ul. Pięciomorgowa 3, 61-757 Poznań</p>
-                        <p>Phone: +48 61 858 57 60</p>
-                        <p>Email: poznan@office.gov.pl</p>
-                    `;
-                    break;
-                // Add more cities as needed
-                default:
-                    contactDetails = '<p>Please select a city to see contact details.</p>';
-                    break;
-            }
-
-            contactDetailsContainer.innerHTML = contactDetails;
-        }
-
         // Logout function
         function logout() {
             localStorage.removeItem("loggedIn");
@@ -208,7 +211,7 @@ body.login-page {
             document.getElementById('knowledge-base').style.display = 'none';
             document.body.classList.add('login-page');
             document.querySelector('.sidebar').style.display = 'none'; // Hide sidebar after logout
-            document.querySelector('header').style.display = 'none'; // Hide the header after logout
+            document.querySelector('header').style.display = 'none'; // Hide header after logout
         }
     </script>
 </head>
@@ -219,21 +222,8 @@ body.login-page {
     </header>
 
     <div class="sidebar">
-        <h2 align ="center">Migration Office</h2>
-        <div class="dropdown">
-            <a href="javascript:void(0)">Voivodeship</a>
-            <div class="dropdown-content">
-                <a href="javascript:void(0)" onclick="showContactDetails('Warsaw')">Warsaw</a>
-                <a href="javascript:void(0)" onclick="showContactDetails('Kraków')">Kraków</a>
-                <a href="javascript:void(0)" onclick="showContactDetails('Gdańsk')">Gdańsk</a>
-                <a href="javascript:void(0)" onclick="showContactDetails('Wrocław')">Wrocław</a>
-                <a href="javascript:void(0)" onclick="showContactDetails('Poznań')">Poznań</a>
-            </div>
-        </div>
-
-        <div id="sidebar-contact-details" class="contact-details">
-            <p>Please select a city to see the contact details of the office.</p>
-        </div>
+        <h2 align="center">Migration Office</h2>
+        <!-- Add sidebar content here -->
     </div>
 
     <div class="content">
@@ -250,14 +240,6 @@ body.login-page {
         <div id="knowledge-base" class="container" style="display: none;">
             <h2>Knowledge Base</h2>
             <p>Welcome to our knowledge base. Browse through the articles below to find useful information.</p>
-            <h3>Popular Articles</h3>
-            <ul>
-                <li><a href="/article/1">How to use the Knowledge Base</a></li>
-                <li><a href="/article/2">Getting Started with Our Platform</a></li>
-                <li><a href="/article/3">Frequently Asked Questions</a></li>
-                <li><a href="/article/4">Advanced Features Explained</a></li>
-                <li><a href="/article/5">Troubleshooting Common Issues</a></li>
-            </ul>
         </div>
     </div>
 </body>
