@@ -5,197 +5,109 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Selling Dreams</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            min-height: 100vh;
-            margin: 0;
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-start;
-            align-items: flex-start;
-        }
+        /* Ensure the body and content are responsive */
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column; /* Stack elements vertically on small screens */
+    justify-content: flex-start;
+    align-items: center;
+}
 
-        body.login-page {
-            background: url('wroclaw2.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            text-align: center;
-        }
+body.login-page {
+    background: linear-gradient(to right, #1E3A8A, #0F172A);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    text-align: center;
+}
 
-        .container {
-            max-width: 600px;
-            background: white;
-            padding: 20px;
-            margin: auto;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+/* Sidebar styling */
+.sidebar {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: linear-gradient(to right, #1E3A8A, #0F172A);
+    padding-top: 20px;
+    color: white;
+    font-size: 18px;
+    padding-right: 20px;
+    display: none; /* Hide sidebar initially */
+    z-index: 50;
+}
 
-        h2 {
-            color: hsl(0, 100%, 2%);
-        }
+/* Responsive Design for mobile screens */
+@media (max-width: 768px) {
+    /* Mobile view: stack header and login container vertically */
+    header {
+        padding: 10px;
+        justify-content: flex-start; /* Align to left in mobile view */
+        position: static; /* Remove fixed positioning on mobile */
+    }
 
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
+    header .logout-button {
+        margin-right: 10px; /* Adjust margin for mobile */
+    }
 
-        li {
-            margin: 10px 0;
-        }
+    .sidebar {
+        width: 200px; /* Slightly narrower sidebar on mobile */
+    }
 
-        a {
-            color: #1d4ed8;
-            text-decoration: none;
-        }
+    .container, .login-container {
+        width: 100%;
+        padding: 15px;
+        box-sizing: border-box;
+    }
 
-        a:hover {
-            text-decoration: underline;
-        }
+    .content {
+        margin-left: 0; /* Adjust for full-width on mobile */
+        padding: 15px;
+        width: 100%;
+    }
 
-        .login-container {
-            max-width: 400px;
-            background: rgba(255, 255, 255, 0.8); /* White background with some transparency */
-            padding: 20px;
-            margin: 20px auto;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+    /* Adjust the dropdown for mobile */
+    .dropdown-content {
+        position: static;
+        margin-top: 10px;
+        background-color: #0F172A;
+        width: 100%;
+    }
 
-        .input-field {
-            width: 95%;
-            padding: 10px;
-            padding-left: 0px;
-            margin: 10px auto; /* Equal margin for both left and right */
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            display: block; /* Ensures block-level behavior */
-        }
+    .dropdown-content a {
+        padding: 10px;
+        font-size: 16px;
+    }
+}
 
-        .login-button {
-            background-color: #1d4ed8;
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-        }
+/* Styling for wider screens (default styling) */
+@media (min-width: 769px) {
+    body {
+        flex-direction: row; /* Stack items horizontally for wider screens */
+        justify-content: flex-start;
+    }
 
-        .login-button:hover {
-            background-color: #153c8a;
-        }
+    .container, .login-container {
+        width: 600px;
+    }
 
-        .error {
-            color: red;
-            display: none;
-        }
+    .content {
+        margin-left: 260px; /* Sidebar space */
+        padding: 20px;
+    }
 
-        /* Sidebar styling */
-        .sidebar {
-            height: 100%;
-            width: 250px;
-            position: fixed;
-            top: 20;
-            left: 0;
-            background: linear-gradient(to right, #1E3A8A, #0F172A);
-            padding-top: 20px;
-            color: white;
-            font-size: 18px;
-            padding-right: 20px;
-            display: none; /* Hide sidebar initially */
-        }
+    header {
+        position: fixed;
+        top: 0;
+        right: 0;
+        z-index: 100;
+    }
+}
 
-        .sidebar a {
-            color: white;
-            padding: 10px;
-            text-decoration: none;
-            display: block;
-        }
-
-        .sidebar a:hover {
-            background-color: #1d4ed8;
-        }
-
-        /* Dropdown button */
-        .dropdown {
-            position: relative;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f1f1f1;
-            min-width: 160px;
-            z-index: 1;
-            margin-top: 10px;
-            width: 100%;
-            left: 0;
-            top: 0;
-        }
-
-        .dropdown-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #ddd;
-        }
-
-        /* Show the dropdown content on hover */
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        /* Contact details styling */
-        .contact-details {
-            margin-top: 20px;
-            margin-left: 20px;
-            background-color: #f9f9f9;
-            padding: 15px;
-            border-radius: 5px;
-            color: black;
-        }
-
-        /* Content area styling */
-        .content {
-            margin-left: 260px;
-            padding: 20px;
-            flex-grow: 1;
-        }
-
-        /* Header styling */
-        header {
-            width: 100%;
-            background-color: #0F172A;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: flex-end; /* Align button to the right */
-            align-items: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 100;
-        }
-
-        header .logout-button {
-            color: white;
-            background-color: #1d4ed8;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            margin-right: 50px;
-        }
-
-        header .logout-button:hover {
-            background-color: #153c8a;
-        }
     </style>
     <script>
         // Check if the user is already logged in when the page loads
