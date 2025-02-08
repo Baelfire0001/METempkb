@@ -8,12 +8,12 @@
         body {
             font-family: Arial, sans-serif;
             padding: 20px;
+            min-height: 100vh;
             margin: 0;
             display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            flex-direction: row;
             justify-content: flex-start;
-            align-items: center;
+            align-items: flex-start;
         }
 
         body.login-page {
@@ -37,13 +37,41 @@
             color: hsl(0, 100%, 2%);
         }
 
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin: 10px 0;
+        }
+
+        a {
+            color: #1d4ed8;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .login-container {
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.8); /* White background with some transparency */
+            padding: 20px;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
         .input-field {
             width: 95%;
             padding: 10px;
-            margin: 10px auto;
+            padding-left: 0px;
+            margin: 10px auto; /* Equal margin for both left and right */
             border: 1px solid #ccc;
             border-radius: 5px;
-            display: block;
+            display: block; /* Ensures block-level behavior */
         }
 
         .login-button {
@@ -60,19 +88,24 @@
             background-color: #153c8a;
         }
 
-        /* Sidebar Styling */
+        .error {
+            color: red;
+            display: none;
+        }
+
+        /* Sidebar styling */
         .sidebar {
             height: 100%;
             width: 250px;
             position: fixed;
-            top: 0;
+            top: 20;
             left: 0;
             background: linear-gradient(to right, #1E3A8A, #0F172A);
             padding-top: 20px;
             color: white;
             font-size: 18px;
-            display: none; /* Initially hidden */
-            z-index: 1;
+            padding-right: 20px;
+            display: none; /* Hide sidebar initially */
         }
 
         .sidebar a {
@@ -86,13 +119,63 @@
             background-color: #1d4ed8;
         }
 
-        /* Header Styling */
+        /* Dropdown button */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            z-index: 1;
+            margin-top: 10px;
+            width: 100%;
+            left: 0;
+            top: 0;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        /* Show the dropdown content on hover */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Contact details styling */
+        .contact-details {
+            margin-top: 20px;
+            margin-left: 20px;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            color: black;
+        }
+
+        /* Content area styling */
+        .content {
+            margin-left: 260px;
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        /* Header styling */
         header {
             width: 100%;
             background-color: #0F172A;
             padding: 10px 20px;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end; /* Align button to the right */
             align-items: center;
             position: fixed;
             top: 0;
@@ -107,98 +190,11 @@
             border: none;
             border-radius: 10px;
             cursor: pointer;
+            margin-right: 50px;
         }
 
         header .logout-button:hover {
             background-color: #153c8a;
-        }
-
-        /* Mobile Menu Toggle */
-        .menu-toggle {
-            display: none;
-            cursor: pointer;
-            color: white;
-            font-size: 30px;
-        }
-
-        /* Media Queries for Mobile View */
-        @media (max-width: 768px) {
-            .container {
-                width: 100%;
-                padding: 15px;
-                box-sizing: border-box;
-            }
-
-            body {
-                padding: 10px;
-            }
-
-            header {
-                padding: 10px;
-                justify-content: space-between;
-            }
-
-            .menu-toggle {
-                display: block;
-            }
-
-            .sidebar {
-                display: none;
-                width: 200px;
-                position: absolute;
-                top: 0;
-                left: -200px;
-                transition: left 0.3s ease;
-            }
-
-            .sidebar.active {
-                display: block;
-                left: 0;
-            }
-
-            header .logout-button {
-                margin-right: 10px;
-            }
-
-            .content {
-                margin-left: 0;
-                padding: 10px;
-            }
-        }
-
-        /* Media Queries for Desktop View */
-        @media (min-width: 769px) {
-            body {
-                flex-direction: row; /* Horizontal layout for large screens */
-                justify-content: flex-start;
-            }
-
-            .container {
-                width: 600px;
-            }
-
-            .sidebar {
-                display: block;
-                position: fixed;
-                top: 0;
-                left: 0;
-                z-index: 1;
-            }
-
-            .content {
-                margin-left: 250px;
-                padding: 20px;
-            }
-
-            header {
-                position: fixed;
-                top: 0;
-                left: 0;
-                z-index: 100;
-                width: 100%;
-                display: flex;
-                justify-content: flex-end;
-            }
         }
     </style>
     <script>
@@ -209,7 +205,7 @@
                 document.getElementById('knowledge-base').style.display = 'block';
                 document.body.classList.remove('login-page');
                 document.querySelector('.sidebar').style.display = 'block'; // Show sidebar after login
-                document.querySelector('header').style.display = 'flex'; // Show header with logout button
+                document.querySelector('header').style.display = 'flex'; // Show the header with logout button
             }
         };
 
@@ -239,6 +235,60 @@
             }
         }
 
+        function showContactDetails(city) {
+            const contactDetailsContainer = document.getElementById('sidebar-contact-details');
+            let contactDetails = '';
+
+            switch(city) {
+                case 'Warsaw':
+                    contactDetails = `
+                        <h4>Office for Foreigners - Warsaw</h4>
+                        <p>Address: ul. Targowa 74, 03-734 Warszawa</p>
+                        <p>Phone: +48 22 600 07 72</p>
+                        <p>Email: warsaw@office.gov.pl</p>
+                    `;
+                    break;
+                case 'Kraków':
+                    contactDetails = `
+                        <h4>Office for Foreigners - Kraków</h4>
+                        <p>Address: ul. Basztowa 22, 31-156 Kraków</p>
+                        <p>Phone: +48 12 616 45 45</p>
+                        <p>Email: krakow@office.gov.pl</p>
+                    `;
+                    break;
+                case 'Gdańsk':
+                    contactDetails = `
+                        <h4>Office for Foreigners - Gdańsk</h4>
+                        <p>Address: ul. Wały Jagiellońskie 1, 80-853 Gdańsk</p>
+                        <p>Phone: +48 58 302 79 65</p>
+                        <p>Email: gdansk@office.gov.pl</p>
+                    `;
+                    break;
+                case 'Wrocław':
+                    contactDetails = `
+                        <h4>Office for Foreigners - Wrocław</h4>
+                        <p>Address: ul. Świdnicka 26, 50-066 Wrocław</p>
+                        <p>Phone: +48 71 343 61 77</p>
+                        <p>Email: wroclaw@office.gov.pl</p>
+                    `;
+                    break;
+                case 'Poznań':
+                    contactDetails = `
+                        <h4>Office for Foreigners - Poznań</h4>
+                        <p>Address: ul. Pięciomorgowa 3, 61-757 Poznań</p>
+                        <p>Phone: +48 61 858 57 60</p>
+                        <p>Email: poznan@office.gov.pl</p>
+                    `;
+                    break;
+                // Add more cities as needed
+                default:
+                    contactDetails = '<p>Please select a city to see contact details.</p>';
+                    break;
+            }
+
+            contactDetailsContainer.innerHTML = contactDetails;
+        }
+
         // Logout function
         function logout() {
             localStorage.removeItem("loggedIn");
@@ -246,13 +296,7 @@
             document.getElementById('knowledge-base').style.display = 'none';
             document.body.classList.add('login-page');
             document.querySelector('.sidebar').style.display = 'none'; // Hide sidebar after logout
-            document.querySelector('header').style.display = 'none'; // Hide header after logout
-        }
-
-        // Toggle sidebar visibility on mobile
-        function toggleSidebar() {
-            const sidebar = document.querySelector('.sidebar');
-            sidebar.classList.toggle('active');
+            document.querySelector('header').style.display = 'none'; // Hide the header after logout
         }
     </script>
 </head>
@@ -260,18 +304,30 @@
     <!-- Header with logout button -->
     <header style="display: none;">
         <button class="logout-button" onclick="logout()">Logout</button>
-        <span class="menu-toggle" onclick="toggleSidebar()">☰</span>
     </header>
 
     <div class="sidebar">
-        <h2 align="center">Migration Office</h2>
-        <!-- Add sidebar content here -->
+        <h2 align ="center">Migration Office</h2>
+        <div class="dropdown">
+            <a href="javascript:void(0)">Voivodeship</a>
+            <div class="dropdown-content">
+                <a href="javascript:void(0)" onclick="showContactDetails('Warsaw')">Warsaw</a>
+                <a href="javascript:void(0)" onclick="showContactDetails('Kraków')">Kraków</a>
+                <a href="javascript:void(0)" onclick="showContactDetails('Gdańsk')">Gdańsk</a>
+                <a href="javascript:void(0)" onclick="showContactDetails('Wrocław')">Wrocław</a>
+                <a href="javascript:void(0)" onclick="showContactDetails('Poznań')">Poznań</a>
+            </div>
+        </div>
+
+        <div id="sidebar-contact-details" class="contact-details">
+            <p>Please select a city to see the contact details of the office.</p>
+        </div>
     </div>
 
     <div class="content">
         <div id="login" class="login-container">
             <h2>Migrant Expert</h2>
-            <p id="error-message" class="error" style="display: none;">Invalid username or password</p>
+            <p id="error-message" class="error">Invalid username or password</p>
             <form onsubmit="authenticate(event)">
                 <input type="text" id="username" class="input-field" placeholder="Username" required>
                 <input type="password" id="password" class="input-field" placeholder="Password" required>
@@ -282,6 +338,14 @@
         <div id="knowledge-base" class="container" style="display: none;">
             <h2>Knowledge Base</h2>
             <p>Welcome to our knowledge base. Browse through the articles below to find useful information.</p>
+            <h3>Popular Articles</h3>
+            <ul>
+                <li><a href="/article/1">How to use the Knowledge Base</a></li>
+                <li><a href="/article/2">Getting Started with Our Platform</a></li>
+                <li><a href="/article/3">Frequently Asked Questions</a></li>
+                <li><a href="/article/4">Advanced Features Explained</a></li>
+                <li><a href="/article/5">Troubleshooting Common Issues</a></li>
+            </ul>
         </div>
     </div>
 </body>
