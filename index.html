@@ -8,10 +8,10 @@
         body {
             font-family: Arial, sans-serif;
             padding: 20px;
-            min-height: 100vh;
             margin: 0;
             display: flex;
-            flex-direction: column; /* Default to vertical layout */
+            flex-direction: column;
+            min-height: 100vh;
             justify-content: flex-start;
             align-items: center;
         }
@@ -72,6 +72,7 @@
             color: white;
             font-size: 18px;
             display: none; /* Initially hidden */
+            z-index: 1;
         }
 
         .sidebar a {
@@ -91,7 +92,7 @@
             background-color: #0F172A;
             padding: 10px 20px;
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
             align-items: center;
             position: fixed;
             top: 0;
@@ -106,45 +107,61 @@
             border: none;
             border-radius: 10px;
             cursor: pointer;
-            margin-right: 50px;
         }
 
         header .logout-button:hover {
             background-color: #153c8a;
         }
 
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            color: white;
+            font-size: 30px;
+        }
+
         /* Media Queries for Mobile View */
         @media (max-width: 768px) {
-            body {
-                padding: 10px; /* Reduced padding for mobile */
-                flex-direction: column;
-            }
-
-            .sidebar {
-                width: 200px; /* Narrow sidebar */
-                position: static; /* Sidebar becomes part of flow */
-                display: block;
-                margin-top: 20px;
-            }
-
-            header {
-                position: static; /* Static header for mobile */
-                padding: 10px;
-                justify-content: flex-start; /* Align button to left */
-            }
-
-            header .logout-button {
-                margin-right: 10px; /* Adjust margin on mobile */
-            }
-
-            .container, .login-container {
+            .container {
                 width: 100%;
                 padding: 15px;
                 box-sizing: border-box;
             }
 
+            body {
+                padding: 10px;
+            }
+
+            header {
+                padding: 10px;
+                justify-content: space-between;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .sidebar {
+                display: none;
+                width: 200px;
+                position: absolute;
+                top: 0;
+                left: -200px;
+                transition: left 0.3s ease;
+            }
+
+            .sidebar.active {
+                display: block;
+                left: 0;
+            }
+
+            header .logout-button {
+                margin-right: 10px;
+            }
+
             .content {
-                width: 100%;
+                margin-left: 0;
                 padding: 10px;
             }
         }
@@ -160,9 +177,27 @@
                 width: 600px;
             }
 
+            .sidebar {
+                display: block;
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 1;
+            }
+
             .content {
-                margin-left: 260px;
+                margin-left: 250px;
                 padding: 20px;
+            }
+
+            header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 100;
+                width: 100%;
+                display: flex;
+                justify-content: flex-end;
             }
         }
     </style>
@@ -213,12 +248,19 @@
             document.querySelector('.sidebar').style.display = 'none'; // Hide sidebar after logout
             document.querySelector('header').style.display = 'none'; // Hide header after logout
         }
+
+        // Toggle sidebar visibility on mobile
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('active');
+        }
     </script>
 </head>
 <body class="login-page">
     <!-- Header with logout button -->
     <header style="display: none;">
         <button class="logout-button" onclick="logout()">Logout</button>
+        <span class="menu-toggle" onclick="toggleSidebar()">☰</span>
     </header>
 
     <div class="sidebar">
@@ -229,7 +271,7 @@
     <div class="content">
         <div id="login" class="login-container">
             <h2>Migrant Expert</h2>
-            <p id="error-message" class="error">Invalid username or password</p>
+            <p id="error-message" class="error" style="display: none;">Invalid username or password</p>
             <form onsubmit="authenticate(event)">
                 <input type="text" id="username" class="input-field" placeholder="Username" required>
                 <input type="password" id="password" class="input-field" placeholder="Password" required>
